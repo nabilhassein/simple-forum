@@ -1,0 +1,19 @@
+<body>
+  <div class="container">
+    <header>
+      <h1>Forum</h1>
+      <form class="new-post">
+        <input type="text" name="text" placeholder="Type to add new posts" />
+      </form>
+    </header>
+    <ul>
+      {{#each posts}}
+        {{> post}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+<template name="post">
+  <li>{{text}}</li>
+</template>
