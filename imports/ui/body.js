@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Posts } from '../api/posts.js';
+import './post.js';
 import './body.html';
 
 Template.body.helpers({
@@ -17,7 +18,7 @@ Template.body.events({
     const target = event.target;
     const text = target.text.value;
 
-    // Insert a task into the collection
+    // Insert a post into the collection
     Posts.insert({
       text,
       createdAt: new Date(), // current time

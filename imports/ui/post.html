@@ -1,0 +1,7 @@
+<template name="post">
+  <li class="{{#if read}}read{{/if}}">
+    <button class="delete">&times;</button>
+    <input type="checkbox" read="{{read}}" class="toggle-read" />
+    <span class="text">{{text}}</span>
+  </li>
+</template>

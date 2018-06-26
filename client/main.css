@@ -88,12 +88,8 @@ li .text {
   margin-left: 10px;
 }
 
-li.checked {
+li.read {
   color: #888;
-}
-
-li.checked .text {
-  text-decoration: line-through;
 }
 
 li.private {
