@@ -1,7 +1,13 @@
 <body>
   <div class="container">
     <header>
-      <h1>Forum</h1>
+      <h1>Forum {{unreadCount}}</h1>
+
+      <label class="hide-read">
+        <input type="checkbox" />
+        Hide posts you've read
+      </label>
+
       <form class="new-post">
         <input type="text" name="text" placeholder="Type to add new posts" />
       </form>
