@@ -8,9 +8,13 @@
         Hide posts you've read
       </label>
 
+      {{>loginButtons}}
+
+      {{#if currentUser}}
       <form class="new-post">
         <input type="text" name="text" placeholder="Type to add new posts" />
       </form>
+      {{/if}}
     </header>
     <ul>
       {{#each posts}}
