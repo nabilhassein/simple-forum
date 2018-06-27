@@ -1,15 +1,12 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Posts } from '../api/posts.js';
 import './post.html';
 
 Template.post.events({
   'click .toggle-read'() {
-    // Set the read property to the opposite of its current value
-    Posts.update(this._id, {
-      $set: { read: !this.read },
-    });
+    Meteor.call('posts.setRead', this._id, !this.read);
   },
   'click .delete'() {
-    Posts.remove(this._id);
+    Meteor.call('posts.remove', this._id);
   },
 });

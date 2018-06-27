@@ -16,7 +16,7 @@ Template.body.helpers({
   posts() {
     const instance = Template.instance();
     const filters = instance.state.get('hideRead') ? { read: { $ne: true } } : {};
-    return Posts.find(filters);
+    return Posts.find(filters, { sort: {createdAt: 1}});
   },
   unreadCount() {
     return Posts.find({ read: { $ne: true } }).count();
@@ -30,12 +30,7 @@ Template.body.events({
     const target = event.target;
     const text = target.text.value;
 
-    Posts.insert({
-      text: text,
-      createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
-    });
+    Meteor.call('posts.insert', text);
 
     target.text.value = '';
   },
