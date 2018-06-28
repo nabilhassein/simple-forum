@@ -4,6 +4,18 @@ import { check } from 'meteor/check';
 
 export const Posts = new Mongo.Collection('posts');
 
+if (Meteor.isServer) {
+  // This code only runs on the server
+  Meteor.publish('posts', function postsPublication() {
+    return Posts.find({
+      $or: [
+        { private: { $ne: true } },
+        { owner: this.userId },
+      ],
+    });
+  });
+}
+
 Meteor.methods({
   'posts.insert'(text) {
     check(text, String);
@@ -22,6 +34,13 @@ Meteor.methods({
 
   'posts.remove'(postId) {
     check(postId, String);
+
+    const post = Posts.findOne(postId);
+
+    if (post.owner !== Meteor.userId()) {
+      throw new Meteor.Error('not-authorized');
+    }
+
     Posts.remove(postId);
   },
 
@@ -31,4 +50,17 @@ Meteor.methods({
     Posts.update(postId, { $set: { read: setRead } });
   },
 
+  'posts.setPrivate'(postId, setToPrivate) {
+    check(postId, String);
+    check(setToPrivate, Boolean);
+
+    const post = Posts.findOne(postId);
+    // Make sure only the post owner can make a post private
+
+    if (post.owner !== Meteor.userId()) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    Posts.update(postId, { $set: { private: setToPrivate } });
+  },
 });
